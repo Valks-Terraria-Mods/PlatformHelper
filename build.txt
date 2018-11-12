@@ -1,4 +1,4 @@
 author = valkyrienyanko
-version = 1.0
+version = 1.1
 displayName = Platform Helper
 homepage = https://discord.gg/thMupbv
