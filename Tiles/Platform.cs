@@ -18,7 +18,7 @@ namespace PlatformHelper.Tiles
                         heldItem.stack -= (amount - 1);
                         for (int n = 1; n < amount; n++)
                         {
-                            WorldGen.PlaceTile(i + n, j, item.createTile, false, false, -1, item.placeStyle);
+                            WorldGen.PlaceTile(i + n, j, item.createTile, style:item.placeStyle);
                         }
 
                     }
@@ -27,7 +27,7 @@ namespace PlatformHelper.Tiles
                         heldItem.stack -= (amount - 1);
                         for (int n = 1; n < amount; n++)
                         {
-                            WorldGen.PlaceTile(i - n, j, item.createTile, false, false, -1, item.placeStyle);
+                            WorldGen.PlaceTile(i - n, j, item.createTile, style:item.placeStyle);
                         }
                     }
                 }
