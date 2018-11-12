@@ -1,0 +1,6 @@
+.vs/
+bin/
+obj/
+PlatformHelper.csproj
+PlatformHelper.csproj.user
+PlatformHelper.sln
