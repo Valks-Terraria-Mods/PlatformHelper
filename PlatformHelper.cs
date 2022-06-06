@@ -1,23 +1,22 @@
-using Terraria.ModLoader;
+global using System;
+global using Terraria;
+global using Terraria.ID;
+global using Terraria.ModLoader;
+global using Microsoft.Xna.Framework.Input;
 
-namespace PlatformHelper
+namespace PlatformHelper;
+
+public class PlatformHelper : Mod
 {
-	class PlatformHelper : Mod
-	{
-        public static ModHotKey PlatformHotKey;
+    public static ModKeybind HotkeyPlacePlatform { get; private set; }
 
-        public PlatformHelper()
-		{
-		}
+    public override void Load()
+    {
+        HotkeyPlacePlatform = KeybindLoader.RegisterKeybind(this, "Place Platform", Keys.F);
+    }
 
-        public override void Load()
-        {
-            PlatformHotKey = RegisterHotKey("Platform Helper", "F");
-        }
-
-        public override void Unload()
-        {
-            PlatformHotKey = null;
-        }
+    public override void Unload()
+    {
+        HotkeyPlacePlatform = null;
     }
 }
