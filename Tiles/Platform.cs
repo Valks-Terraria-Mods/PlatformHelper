@@ -10,23 +10,15 @@ public class Platform : GlobalTile
         var amount = Math.Min(Main.LocalPlayer.HeldItem.stack, 5);
         var heldItem = Main.LocalPlayer.HeldItem;
 
-        if (Main.LocalPlayer.direction == 1)
+        bool directionRight = Main.LocalPlayer.direction == 1;
+
+        heldItem.stack -= (amount - 1);
+        for (int n = 1; n < amount; n++)
         {
-            heldItem.stack -= (amount - 1);
-            for (int n = 1; n < amount; n++)
-            {
-                WorldGen.PlaceTile(i + n, j, item.createTile, style: item.placeStyle);
-                NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, i + n, j, 1);
-            }
-        }
-        else
-        {
-            heldItem.stack -= (amount - 1);
-            for (int n = 1; n < amount; n++)
-            {
-                WorldGen.PlaceTile(i - n, j, item.createTile, style: item.placeStyle);
-                NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, i - n, j, 1);
-            }
+            int tilePositionX = directionRight ? i + n : i - n;
+
+            WorldGen.PlaceTile(tilePositionX, j, item.createTile, style: item.placeStyle);
+            NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, tilePositionX, j, 1);
         }
     }
 }
