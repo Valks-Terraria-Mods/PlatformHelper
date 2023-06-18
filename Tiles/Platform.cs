@@ -7,25 +7,22 @@ public class Platform : GlobalTile
         if (!PlatformHelper.HotkeyPlacePlatform.Current)
             return;
 
-        var amount = Math.Min(Main.LocalPlayer.HeldItem.stack, 5);
         var heldItem = Main.LocalPlayer.HeldItem;
 
-        if (Main.LocalPlayer.direction == 1)
+        for (int n = 0; n < 4; n++)
         {
-            heldItem.stack -= (amount - 1);
-            for (int n = 1; n < amount; n++)
+            int tilePositionX = Main.LocalPlayer.direction == 1 ? i + n : i - n;
+
+            bool successfullyPlacedTile = WorldGen.PlaceTile(tilePositionX, j, item.createTile, style: item.placeStyle);
+            NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, tilePositionX, j, 1);
+
+            if (!successfullyPlacedTile) continue;
+
+            heldItem.stack--;
+            if (heldItem.stack == 0)
             {
-                WorldGen.PlaceTile(i + n, j, item.createTile, style: item.placeStyle);
-                NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, i + n, j, 1);
-            }
-        }
-        else
-        {
-            heldItem.stack -= (amount - 1);
-            for (int n = 1; n < amount; n++)
-            {
-                WorldGen.PlaceTile(i - n, j, item.createTile, style: item.placeStyle);
-                NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, i - n, j, 1);
+                heldItem.TurnToAir();
+                break;
             }
         }
     }
