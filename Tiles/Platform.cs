@@ -4,7 +4,7 @@ public class Platform : GlobalTile
 {
     public override void PlaceInWorld(int i, int j, int type, Item item)
     {
-        if (!PlatformHelper.HotkeyPlacePlatform.Current)
+        if (!RegisterTheKeybind.HotkeyPlacePlatform.Current)
             return;
 
         var heldItem = Main.LocalPlayer.HeldItem;

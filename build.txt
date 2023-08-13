@@ -1,4 +1,4 @@
 author = valkyrienyanko
-version = 4.0.0
+version = 4.1.1
 displayName = Platform Helper
 homepage = https://github.com/Valks-Terraria-Mods/PlatformHelper

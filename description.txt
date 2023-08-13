@@ -2,6 +2,9 @@ Ever get tired of creating a arena for the Wall of Flesh? This mod fixes that! T
 
 Enjoy!
 
+v4.1
+Merged PR from Arguswastaken
+
 v2.0
 Now works with any block!
 
