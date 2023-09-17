@@ -1,8 +1,24 @@
 ﻿namespace PlatformHelper.Tiles;
 
-public class Platform : GlobalTile
+public class Walls : GlobalWall
 {
     public override void PlaceInWorld(int i, int j, int type, Item item)
+    {
+        Utils.Place(i, j, item, isWall: true);
+    }
+}
+
+public class Tiles : GlobalTile
+{
+    public override void PlaceInWorld(int i, int j, int type, Item item)
+    {
+        Utils.Place(i, j, item, isWall: false);
+    }
+}
+
+public static class Utils
+{
+    public static void Place(int i, int j, Item item, bool isWall)
     {
         if (!Keybinds.HotkeyPlacePlatform.Current)
             return;
@@ -28,22 +44,33 @@ public class Platform : GlobalTile
                 y = j + n;
 
             // Place the tile in the world
-            bool successfullyPlacedTile = 
-                WorldGen.PlaceTile(
-                    i: x, 
-                    j: y, 
-                    Type: item.createTile, 
+            bool successfullyPlaced = true;
+
+            if (isWall)
+            {
+                WorldGen.PlaceWall(
+                    i: x,
+                    j: y,
+                    type: item.createWall);
+            }
+            else
+            {
+                successfullyPlaced = WorldGen.PlaceTile(
+                    i: x,
+                    j: y,
+                    Type: item.createTile,
                     style: item.placeStyle);
+            } 
 
             // Tell other players about this tile
             NetMessage.SendTileSquare(
-                whoAmi: Main.LocalPlayer.whoAmI, 
-                tileX: x, 
-                tileY: y, 
+                whoAmi: Main.LocalPlayer.whoAmI,
+                tileX: x,
+                tileY: y,
                 centeredSquareSize: 1);
 
             // Tile could not be placed
-            if (!successfullyPlacedTile) 
+            if (!successfullyPlaced)
                 continue;
 
             // Tile was placed so removed platform item from player inventory
