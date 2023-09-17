@@ -12,23 +12,34 @@ public class Platform : GlobalTile
 
         for (int n = 0; n < config.PlatformLength; n++)
         {
-            // Get the tile based on what direction the player is facing
-            int tilePositionX = 
-                Main.LocalPlayer.direction == 1 ? i + n : i - n;
+            int x = i;
+            int y = j;
+
+            // Vertical
+            // 0 - no vertical place of platforms
+            // -1 - place platforms upwards
+            // 1 - place platforms downwards
+            if (config.Vertical == 0)
+                // Get the tile based on what direction the player is facing
+                x = Main.LocalPlayer.direction == 1 ? i + n : i - n;
+            else if (config.Vertical == -1)
+                y = j - n;
+            else if (config.Vertical == 1)
+                y = j + n;
 
             // Place the tile in the world
             bool successfullyPlacedTile = 
                 WorldGen.PlaceTile(
-                    i: tilePositionX, 
-                    j: j, 
+                    i: x, 
+                    j: y, 
                     Type: item.createTile, 
                     style: item.placeStyle);
 
             // Tell other players about this tile
             NetMessage.SendTileSquare(
                 whoAmi: Main.LocalPlayer.whoAmI, 
-                tileX: tilePositionX, 
-                tileY: j, 
+                tileX: x, 
+                tileY: y, 
                 centeredSquareSize: 1);
 
             // Tile could not be placed

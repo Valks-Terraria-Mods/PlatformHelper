@@ -1,1 +1,17 @@
 "Keybinds.Place Platform.DisplayName": Place  Platform
+
+Configs: {
+	Config: {
+		DisplayName: Config
+
+		PlatformLength: {
+			Label: Platform Length
+			Tooltip: The length of the platform
+		}
+
+		Vertical: {
+			Label: Vertical
+			Tooltip: 0 - Disabled, 1 - Place platforms downwards, -1 - Place platforms upwards
+		}
+	}
+}
