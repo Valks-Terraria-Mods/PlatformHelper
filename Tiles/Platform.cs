@@ -22,15 +22,16 @@ public static class Utils
 {
     public static void Place(int x, int y, Item item, bool isWall)
     {
+    	if(!Keybinds.HotkeyPlacePlatform.Current) return;
         Item heldItem = Main.LocalPlayer.HeldItem;
         Config config = Config.Instance;
+        // Check length, subtract one since the game already placed one
         int length = Math.Min(config.PlatformLength,heldItem.stack)-1;
-        if (!Keybinds.HotkeyPlacePlatform.Current || length == 0)
-            return;
+        if (length == 0) return;
         
         for (int n = 0; n < length; n++)
         {
-            // If we have no items, immediately return
+            // If stack is 0, turn to air and immediately return
             if(heldItem.stack == 0) {
                 heldItem.TurnToAir();
                 return;
@@ -42,7 +43,6 @@ public static class Utils
             else y-=config.Vertical;
 
             // Place the tile in the world
-
             if (isWall)
             {
                 WorldGen.PlaceWall(
@@ -50,8 +50,7 @@ public static class Utils
                     j: y,
                     type: item.createWall);
                 // Wall could not be placed
-                if (Main.tile[x,y].WallType != item.createWall)
-                    continue;
+                if (Main.tile[x,y].WallType != item.createWall) continue;
             } else {
                 WorldGen.PlaceTile(
                     i: x,
@@ -59,9 +58,11 @@ public static class Utils
                     Type: item.createTile,
                     style: item.placeStyle);
                 // Tile could not be placed
-                if (Main.tile[x,y].TileType != item.createTile)
-                    continue;
+                if (Main.tile[x,y].TileType != item.createTile) continue;
             } 
+
+            // Tile was placed so remove one from stack
+            heldItem.stack--;
 
             // Tell other players about this tile
             NetMessage.SendTileSquare(
@@ -70,9 +71,6 @@ public static class Utils
                 tileY: y,
                 centeredSquareSize: 1);
 
-
-            // Tile was placed so removed platform item from player inventory
-            heldItem.stack--;
         }
     }
 }
