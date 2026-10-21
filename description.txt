@@ -1,12 +1,20 @@
-Ever get tired of creating a arena for the Wall of Flesh? This mod fixes that! This mod will help you place platforms faster! While holding the hotkey you specified in the controls menu, and placing a platform of any style, four additional platforms will be placed in front of you! If you are only holding three platforms, than only 3 platforms will be placed!
+Ever get tired of creating a arena for the Wall of Flesh? This mod fixes that by helping you place 4 additional platforms in front of you!
 
-Enjoy!
+1. Configure your desired keybind
+2. Hold the keybind while placing any kind of platform
+3. Additional platforms will be placed in the direction the player is facing
+
+v4.2
+Merged PR from superpowers04 which fixes a duplication issue
 
 v4.1
-Merged PR from Arguswastaken
+Merged PR from Arguswastaken which fixes incorrect number of tiles being taken when placed
 
 v2.0
 Now works with any block!
 
 v1.3
 Fixed bug where others could not see block changes on screen.
+
+Source: https://github.com/Valks-Terraria-Mods/PlatformHelper
+Discord: https://discord.gg/j8HQZZ76r8
