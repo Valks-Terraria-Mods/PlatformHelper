@@ -1,4 +1,5 @@
-﻿using ReLogic.Utilities;
+using ReLogic.Utilities;
+using Terraria.ObjectData;
 
 namespace PlatformHelper.Tiles;
 
@@ -22,55 +23,60 @@ public static class Utils
 {
     public static void Place(int x, int y, Item item, bool isWall)
     {
-    	if(!Keybinds.HotkeyPlacePlatform.Current) return;
+        if (!Keybinds.HotkeyPlacePlatform.Current) return;
+
+        // Only extend placement for actual placeable items.
+        if (isWall)
+        {
+            if (item.createWall < 0) return;
+        }
+        else
+        {
+            if (item.createTile < 0) return;
+
+            // Multi-tile objects must be placed normally to avoid deleting or
+            // duplicating parts of furniture when the extra placement runs.
+            TileObjectData tileData = TileObjectData.GetTileData(item.createTile, item.placeStyle);
+            if (tileData != null && (tileData.Width > 1 || tileData.Height > 1)) return;
+        }
+
         Item heldItem = Main.LocalPlayer.HeldItem;
         Config config = Config.Instance;
-        // Check length, subtract one since the game already placed one
-        int length = Math.Min(config.PlatformLength,heldItem.stack)-1;
-        if (length == 0) return;
-        
+
+        // Check length, subtract one since the game already placed one.
+        int length = Math.Min(config.PlatformLength, heldItem.stack) - 1;
+        if (length <= 0) return;
+
         for (int n = 0; n < length; n++)
         {
-            // If stack is 0, turn to air and immediately return
-            if(heldItem.stack == 0) {
+            if (heldItem.stack == 0)
+            {
                 heldItem.TurnToAir();
                 return;
             }
-            // 0 - no vertical place of platforms
-            // -1 - place platforms upwards
-            // 1 - place platforms downwards
-            if (config.Vertical == 0) x+=Main.LocalPlayer.direction;
-            else y-=config.Vertical;
 
-            // Place the tile in the world
+            // 0 - no vertical placement; -1 - upwards; 1 - downwards.
+            if (config.Vertical == 0) x += Main.LocalPlayer.direction;
+            else y -= config.Vertical;
+
             if (isWall)
             {
-                WorldGen.PlaceWall(
-                    i: x,
-                    j: y,
-                    type: item.createWall);
-                // Wall could not be placed
-                if (Main.tile[x,y].WallType != item.createWall) continue;
-            } else {
-                WorldGen.PlaceTile(
-                    i: x,
-                    j: y,
-                    Type: item.createTile,
-                    style: item.placeStyle);
-                // Tile could not be placed
-                if (Main.tile[x,y].TileType != item.createTile) continue;
-            } 
+                WorldGen.PlaceWall(i: x, j: y, type: item.createWall);
+                if (Main.tile[x, y].WallType != item.createWall) continue;
+            }
+            else
+            {
+                WorldGen.PlaceTile(i: x, j: y, Type: item.createTile, style: item.placeStyle);
+                if (Main.tile[x, y].TileType != item.createTile) continue;
+            }
 
-            // Tile was placed so remove one from stack
             heldItem.stack--;
 
-            // Tell other players about this tile
             NetMessage.SendTileSquare(
                 whoAmi: Main.LocalPlayer.whoAmI,
                 tileX: x,
                 tileY: y,
                 centeredSquareSize: 1);
-
         }
     }
 }
