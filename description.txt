@@ -4,6 +4,9 @@ Ever get tired of creating a arena for the Wall of Flesh? This mod fixes that by
 2. Hold the keybind while placing any kind of platform
 3. Additional platforms will be placed in the direction the player is facing
 
+v4.3
+Merged PR from Aaqibhafeezkhan which prevents placing anything that is not a 1x1 tile. (No more accidentally deleting your tools / weapons)
+
 v4.2
 Merged PR from superpowers04 which fixes a duplication issue
 
