@@ -1,5 +1,5 @@
 ## What is this?
-Ever get tired of creating a arena for the Wall of Flesh? This mod fixes that by helping you place 4 additional platforms in front of you!
+Tired of creating an arena for the Wall of Flesh? Is slowly placing platforms getting on your nerves? Well, this mod fixes that by placing a configurable amount of blocks in reach distance in front of you through a keybind!
 
 ## How it works
 1. Configure your desired keybind

@@ -1,8 +1,11 @@
-Ever get tired of creating a arena for the Wall of Flesh? This mod fixes that by helping you place 4 additional platforms in front of you!
+Tired of creating an arena for the Wall of Flesh? Is slowly placing platforms getting on your nerves? Well, this mod fixes that by placing a configurable amount of blocks in reach distance in front of you through a keybind!
 
 1. Configure your desired keybind
 2. Hold the keybind while placing any kind of platform
 3. Additional platforms will be placed in the direction the player is facing
+
+v4.4
+PR from superpowers04 which rewrites the internals to use Terraria's item use functions
 
 v4.3
 Merged PR from Aaqibhafeezkhan which prevents placing anything that is not a 1x1 tile. (No more accidentally deleting your tools / weapons)
