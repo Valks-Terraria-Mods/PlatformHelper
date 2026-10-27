@@ -9,8 +9,7 @@ public class Keybinds : ModSystem
 {
     public static ModKeybind HotkeyPlacePlatform { get; private set; }
 
-    public override void Load()
-    {
+    public override void Load() {
         HotkeyPlacePlatform = KeybindLoader.RegisterKeybind(Mod, "Place Platform", "F");
     }
 
